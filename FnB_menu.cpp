@@ -5,7 +5,7 @@ using namespace std;
 
 FnB_menu::FnB_menu():name(""),stock(0),price(0){};
 
-FnB_menu::FnB_menu(string name,int stock, int price):name(this->name),stock(this->stock),price(this->price){};
+FnB_menu::FnB_menu(string name,int stock, int price):name(name),stock(stock),price(price){};
 
 string FnB_menu::get_name(){
     return name;
