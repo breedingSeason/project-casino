@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 
-class FnB_menu:{
+class FnB_menu{
     protected:
     string name;
     int stock;//quantity that are in store
