@@ -18,11 +18,23 @@ Customer::Customer(string name, int age) : Person(name_, age_) {
   tipsy_rep[4] = "Customer: *Suddenly starts running*";
 }
 
+int Customer::order_drink(int price) {
+  wallet = wallet - price;
+  if (wallet < min_money) {
+    wallet = wallet + price;
+    cout << "Bartender: I think you already run out of money hahaha" << endl;
+    return wallet;
+  } else {
+    cout << "Bartender: Here you go!" << endl;
+    return wallet;
+  }
+}
+
 int Customer::order_food(int price) {
   wallet = wallet - price;
   if (wallet < min_money) {
     wallet = wallet + price;
-    cout << "Bartender: I think you already run out of money hahaha. Get out!" << endl;
+    cout << "Bartender: I think you already run out of money hahaha" << endl;
     return wallet;
   } else {
     cout << "Bartender: Here you go!" << endl;
@@ -44,7 +56,7 @@ int Customer::place_bet(int x) {
   }
 }
 
-int Customer::drink(int x) {
+int Customer::drunk_percentage(int x) {
   // Increase drunkness
   drunkness = drunkness + x;
   if (drunkness > drunkness_max) {
@@ -58,7 +70,7 @@ int Customer::drink(int x) {
   }
 }
 
-int Customer::eat(int x) {
+int Customer::hunger_percentage(int x) {
   // Increase hungriness
   hungriness = hungriness - x;
   if (hungriness < 80 and hungriness > 0) {
@@ -82,9 +94,9 @@ int Customer::money_left() { return wallet; }
 
 void Customer::give_response() override {
   // give response based on drunkness
-  if (drunkness >= 50 and drunkness < drunkness_max) {
+  if (drunkness >= 50 && drunkness < drunkness_max) {
     cout << tipsy_rep[(rand() % 5)] << endl;
-  } else if (drunkness >= 0 and drunkness < 50) {
+  } else if (drunkness >= 0 && drunkness < 50) {
     cout << conscious_rep[(rand() % 5)] << endl;
   } else if (drunkness >= drunkness_max) {
     cout << "Customer: Is this my bed? *starts lying on the floor*" << endl;

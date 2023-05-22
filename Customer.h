@@ -20,12 +20,13 @@ class Customer : public Person {
  public:
   Customer();  // Default constructor
   Customer(string name, int age);
+  int order_drink(int price);
   int order_food(int price);
   int place_bet(int x);
   int get_games_played();
-  int drink(int x);
+  int drunk_percentage(int x);
   int get_drunkness();
-  int eat(int x);
+  int hunger_percentage(int x);
   int get_hungriness();
   int money_left();
   void give_response() override;
