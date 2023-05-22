@@ -8,7 +8,7 @@ class Drink: public FnB_menu{
     int alcohol_percentage;
     public:
     Drink();//default cons
-    Drink(string name,int stock, int price,int alcohol_percentage);//cons
+    Drink(string name,int stock, int price, string type, int alcohol_percentage);//cons
     int get_nutrition_info() override; //returns number of alcohol percentage
 };
 #endif

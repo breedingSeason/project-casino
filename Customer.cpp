@@ -18,23 +18,11 @@ Customer::Customer(string name, int age) : Person(name_, age_) {
   tipsy_rep[4] = "Customer: *Suddenly starts running*";
 }
 
-int Customer::order_drink(int price) {
-  wallet = wallet - price;
-  if (wallet < min_money) {
-    wallet = wallet + price;
-    cout << "Bartender: I think you already run out of money hahaha" << endl;
-    return wallet;
-  } else {
-    cout << "Bartender: Here you go!" << endl;
-    return wallet;
-  }
-}
-
 int Customer::order_food(int price) {
   wallet = wallet - price;
   if (wallet < min_money) {
     wallet = wallet + price;
-    cout << "Bartender: I think you already run out of money hahaha" << endl;
+    cout << "Bartender: I think you already run out of money hahaha. Get out!" << endl;
     return wallet;
   } else {
     cout << "Bartender: Here you go!" << endl;
@@ -56,7 +44,7 @@ int Customer::place_bet(int x) {
   }
 }
 
-int Customer::drunk_percentage(int x) {
+int Customer::drink(int x) {
   // Increase drunkness
   drunkness = drunkness + x;
   if (drunkness > drunkness_max) {
@@ -70,7 +58,7 @@ int Customer::drunk_percentage(int x) {
   }
 }
 
-int Customer::hunger_percentage(int x) {
+int Customer::eat(int x) {
   // Increase hungriness
   hungriness = hungriness - x;
   if (hungriness < 80 and hungriness > 0) {

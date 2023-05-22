@@ -8,7 +8,7 @@ class Food: public FnB_menu{
     int calories;
     public:
     Food();//default cons
-    Food(string name,int stock, int price,int calories);//cons
+    Food(string name,int stock, int price, string type, int calories);//cons
     int get_nutrition_info() override; //returns number of calories
 };
 #endif

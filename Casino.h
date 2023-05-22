@@ -24,6 +24,7 @@ class Casino{
         void set_food_menu(Employee e);
         void set_betting_table(Employee e);
         void main_module(Customer c, Employee e);
+        void main_window(); // provide the main list of options to the user i.e. gamble, eat or leave
         void starting_module();
         void starting_message(int x, Customer c);
         void print_FnB_Menu();

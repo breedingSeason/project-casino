@@ -32,9 +32,9 @@ void Casino::set_food_menu(Employee employee) {
                 columns[i] = row;
             }
             if(columns[4] == "Drinks"){
-				food_menu[i] = new Drink(columns[0], std::stoi(columns[1]), std::stoi(columns[2]), std::stoi(columns[3])); 
-			}else if(columns[5] == "Snacks"){
-				food_menu[i] = new Food(columns[0], std::stoi(columns[1]), std::stoi(columns[2]), std::stoi(columns[3]));
+				food_menu[i] = new Drink(columns[0], std::stoi(columns[1]), std::stoi(columns[2]), columns[3], std::stoi(columns[4])); 
+			}else if(columns[4] == "Snacks"){
+				food_menu[i] = new Food(columns[0], std::stoi(columns[1]), std::stoi(columns[2]), columns[3],  std::stoi(columns[4]));
 			}
         }
     }
@@ -43,11 +43,69 @@ void Casino::set_food_menu(Employee employee) {
     }
 }
 
+void Casino:: main_window() {
+    cout << "Choose from the following list of actions: " << endl;
+    cout << "0. Leave :(     |   1. $$Gamble     |   2. Eat :))     )" << endl;
+}
+
 void Casino::set_betting_table(Employee employee) {
     
 }
 
 void Casino::main_module(Customer customer, Employee employee) {
+    int user_input;
+    cout << "Your wallet has $" << customer.money_left() << ". Have fun out there!" << endl;
+    main_window();
+    cin >> user_input;
+
+    user_input = validate_user_input(user_input);
+
+
+    set_food_menu(employee);
+
+    while(user_input == 0 || user_input == 1 || user_input == 2) {
+        if(user_input == 0) {
+            cout << "Thanks for giving us all your money. See you again!"
+            break;
+        }
+        else if(user_input == 2) {
+            int food_choice;
+            print_FnB_Menu();
+
+            cin >> food_choice;
+            food_choice = validate_user_input(food_choice);
+
+            while(food_choice >= 0 || food_choice <=num_food) {
+                if(food_choice == 0) {
+                    break;
+                }
+                else{
+                    food_menu[food_choice - 1]->prepare_food();
+                    if(food_menu[food_choice-1]->get_stock() > 0) {
+                        customer.order_food(food_menu[food_choice-1]->get_price);
+                        if(customer.get_type() != 0) {
+                            customer.drink(food_menu[food_choice-1]->get_nutrition_info());
+                        }
+                        else {
+                            customer.eat(food_menu[food_choice-1]->get_nutrition_info());
+                        }
+                        customer.give_response();
+                        employee.greet(customer.get_drunkness());
+                        break;
+                    } else {
+                        cout << "I'm sorry but we ran out of " << food_menu[food_choice-1]->get_name() << "Maybe another day." << endl;
+                        food_menu[food_choice-1]->change_stock;
+                    }
+                    break;
+
+                    }
+                }
+            }
+            else if (user_input == 1) {
+                
+            }
+        }
+    }
     
 }
 
@@ -56,7 +114,7 @@ void Casino::starting_module() {
 }
 
 void Casino::starting_message(int x, Customer customer) {
-    if (x == 1)
+    
     
 }
 
