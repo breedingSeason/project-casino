@@ -1,10 +1,12 @@
-#include <string>
-#include <iostream>
 #include "Drink.h"
-Drink::Drink():FnB_menu(),alcohol_percentage(0){};
 
-Drink::Drink(string name,int stock, int price, string type, int alcohol_percentage):FnB_menu(string name, int stock, int price, string type),alcohol_percentage(alcohol_percentage){};
+#include <iostream>
+#include <string>
+Drink::Drink() : FnB_menu(), alcohol_percentage(0){};
 
-int Drink::get_nutrition_info(){
-    return this->alcohol_percentage;
+Drink::Drink(string name, int stock, int price, int alcohol_percentage)
+    : FnB_menu(string name, int stock, int price) {
+  this->alcohol_percentage = alcohol_percentage;
 };
+
+int Drink::get_nutrition_info() { return alcohol_percentage; };
