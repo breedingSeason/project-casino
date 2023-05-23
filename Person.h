@@ -10,10 +10,10 @@ class Person {
   int a_age;
 
  public:
-  Person();
-  Person(string name, int age);
-  string get_name();
-  int get_age();
+  Person(); // Default constructor
+  Person(string name, int age); // Constructor with parameter of name and age
+  string get_name(); // Get person's name
+  int get_age(); // Get person's age
 };
 
 #endif
