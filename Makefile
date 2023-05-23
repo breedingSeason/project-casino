@@ -19,6 +19,9 @@ FnB_menu.o: FnB_menu.cpp FnB_menu.h
 Drink.o: Drink.cpp Drink.h
 	g++ -c Drink.cpp
 
+Food.o: Food.cpp Food.h
+	g++ -c Food.cpp	
+	
 Games.o: Games.cpp Games.h  
 	g++ -c Games.cpp
 
@@ -27,9 +30,6 @@ Hard_Game.o: Hard_Game.cpp Hard_Game.h
 
 Easy_Game.o: Easy_Game.cpp Easy_Game.h
 	g++ -c Easy_Game.cpp	
-
-Food.o: Food.cpp Food.h
-	g++ -c Food.cpp	
 
 Casino.o: Casino.cpp Casino.h
 	g++ -c Casino.cpp
