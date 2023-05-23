@@ -32,6 +32,7 @@ class Customer : public Person {
   int hunger_percentage(int x);   // Change the value of hungriness
   int get_hungriness();           // Return hungriness
   int money_left();               // Return wallet
+  int update_wallet(int x);       // Change the value of wallet/money      
   void give_response() override;  // Give response according to the situations
 };
 

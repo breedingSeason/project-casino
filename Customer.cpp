@@ -84,6 +84,11 @@ int Customer::hunger_percentage(int x) {
   }
 }
 
+int Customer::update_wallet(int x) {
+  // Increase wallet
+  wallet = wallet + x;
+}
+
 int Customer::get_drunkness() { return drunkenness; }
 
 int Customer::get_hungriness() { return hungriness; }
