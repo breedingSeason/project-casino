@@ -23,43 +23,47 @@ void Casino::set_betting_table(Employee emp1) {
 
 void Casino::set_food_menu(Employee emp1) {
   string food_file = "Food_Menu.csv";
-  std::ifstream file(food_file);
+std::ifstream file(food_file);
 
-  if (food_file.is_open()) {
-    string lines;
-    num_food = 0;
-    while (std::getline(food_file, lines)) {
-      num_food++;
-    }
-    food_file.clear();
-    food_file.seekg(0);
+if (file.is_open()) {
+  string lines;
+  num_food = 0;
 
-    food_menu = new FnB_menu*[num_food];
-
-    for (int i = 0; std::getline(food_file, lines); i++) {
-      if (lines.empty()) {
-        continue;
-      }
-
-      string row;
-      string columns[5];
-      stringstream str(lines);
-
-      for (int j = 0; std::getline(str, row, ','); j++) {
-        columns[j] = row;
-      }
-
-      if (columns[3] == "Drinks") {
-        food_menu[i] = new Drink(columns[0], std::stoi(columns[1]),
-                                  std::stoi(columns[2]), columns[3], std::stoi(columns[4]));
-      } else if (columns[3] == "Snacks") {
-        food_menu[i] = new Food(columns[0], std::stoi(columns[1]),
-                                std::stoi(columns[2]), columns[3], std::stoi(columns[4]));
-      }
-    }
-  } else {
-    cout << "Can't open file." << endl;
+  while (std::getline(file, lines)) {
+    num_food++;
   }
+
+  file.clear();
+  file.seekg(0);
+
+  food_menu = new FnB_menu*[num_food];
+
+  for (int i = 0; std::getline(file, lines); i++) {
+    if (lines.empty()) {
+      continue;
+    }
+
+    string row;
+    string columns[5];
+    stringstream str(lines);
+
+    for (int j = 0; std::getline(str, row, ','); j++) {
+      columns[j] = row;
+    }
+
+    if (columns[3] == "Drinks") {
+      food_menu[i] = new Drink(columns[0], std::stoi(columns[1]),
+                                std::stoi(columns[2]), columns[3], std::stoi(columns[4]));
+    } else if (columns[3] == "Snacks") {
+      food_menu[i] = new Food(columns[0], std::stoi(columns[1]),
+                              std::stoi(columns[2]), columns[3], std::stoi(columns[4]));
+    }
+  }
+
+  file.close();
+} else {
+  cout << "Can't open file." << endl;
+}
 }
 
 void Casino::module(Customer cust1, Employee emp1) {
