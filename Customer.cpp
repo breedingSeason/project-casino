@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Customer::Customer(string name, int age) : Person(name_, age_) {
+Customer::Customer(string name, int age) : Person(name, age) {
   conscious_rep[0] = "Customer: This is lovely";
   conscious_rep[1] = "Customer: What a day";
   conscious_rep[2] = "Customer: Seriously, I think I should stop drinking";
@@ -87,9 +87,10 @@ int Customer::hunger_percentage(int x) {
 int Customer::update_wallet(int x) {
   // Increase wallet
   wallet = wallet + x;
+  return wallet;
 }
 
-int Customer::get_drunkness() { return drunkenness; }
+int Customer::get_drunkness() { return drunkness; }
 
 int Customer::get_hungriness() { return hungriness; }
 
@@ -97,7 +98,7 @@ int Customer::get_games_played() { return games_played; }
 
 int Customer::money_left() { return wallet; }
 
-void Customer::give_response() override {
+void Customer::give_response() {
   // give response based on drunkness
   if (drunkness >= 50 && drunkness < drunkness_max) {
     cout << tipsy_rep[(rand() % 5)] << endl;

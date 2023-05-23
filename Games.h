@@ -8,7 +8,7 @@ class Games{
     protected:
         int game_number;
         int bet_amount;
-        int min_bet;
+        const int min_bet = 1000;
         bool player_won;
         int profits;
         int profit;
@@ -18,7 +18,7 @@ class Games{
         //int cards[52];
     public:
         Games();
-        Games(int bet_amount, int min_bet, int num_players);
+        Games(int bet_amount, int num_players);
         void set_bet(int x);
         int get_profit();
         int get_loss();
@@ -30,6 +30,7 @@ class Games{
         virtual bool won_game() = 0;
         virtual void get_card() = 0;
         virtual int get_max_players() = 0;
+        int get_min_bet();
 };
 
 #endif

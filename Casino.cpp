@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -10,11 +12,55 @@ Casino::Casino() {}
 
 void Casino::menu_casino() {
   cout << "Choose from the following list of actions: " << endl;
-  cout << "0. Leave :(   |   1. Drink :))   |   2. Eat :))   |   3. $$Gamble   "
-       << endl;
+  cout << "0. Leave :(     |   1. Eat :))     |   2. $$Gamble     " << endl;
 }
 
-void Casino::set_betting_table(Employee emp1) {}
+void Casino::set_betting_table(Employee emp1) {
+  bet_counter = new Games*[max_num_games]; // 
+  cout << "Welcome to our world of gambling" << endl; 
+  cout << "Please input how much money you want to bet: " << endl;
+}
+
+void Casino::set_food_menu(Employee emp1) {
+  string food_file = "Food_Menu.csv";
+  std::ifstream file(food_file);
+
+  if (food_file.is_open()) {
+    string lines;
+    num_food = 0;
+    while (std::getline(food_file, lines)) {
+      num_food++;
+    }
+    food_file.clear();
+    food_file.seekg(0);
+
+    food_menu = new FnB_menu*[num_food];
+
+    for (int i = 0; std::getline(food_file, lines); i++) {
+      if (lines.empty()) {
+        continue;
+      }
+
+      string row;
+      string columns[5];
+      stringstream str(lines);
+
+      for (int j = 0; std::getline(str, row, ','); j++) {
+        columns[j] = row;
+      }
+
+      if (columns[3] == "Drinks") {
+        food_menu[i] = new Drink(columns[0], std::stoi(columns[1]),
+                                  std::stoi(columns[2]), columns[3], std::stoi(columns[4]));
+      } else if (columns[3] == "Snacks") {
+        food_menu[i] = new Food(columns[0], std::stoi(columns[1]),
+                                std::stoi(columns[2]), columns[3], std::stoi(columns[4]));
+      }
+    }
+  } else {
+    cout << "Can't open file." << endl;
+  }
+}
 
 void Casino::module(Customer cust1, Employee emp1) {
   // This the main module, every major calculation and user interaction happens
@@ -22,7 +68,7 @@ void Casino::module(Customer cust1, Employee emp1) {
   int choice;
   cout << "You have $" << cust1.money_left() << endl;
   cout << "Your drunk level is " << cust1.get_drunkness() << "." << endl;
-  cout << "Your game played is " << cust1.get_games_played() << "." << endl;
+  cout << "Your number of games played is " << cust1.get_games_played() << "." << endl;
 
   this->menu_casino();
   cin >> choice;
@@ -31,48 +77,12 @@ void Casino::module(Customer cust1, Employee emp1) {
 
   this->set_food_menu(emp1);
 
-  while (choice == 1 || choice == 2 || choice == 3 || choice == 0) {
-    if (choice == 1) {  // drink
+  while (choice == 1 || choice == 2 || choice == 0) {
+    if (choice == 1) {  // eat and drink
       int cust_resp;
       cout << endl;
 
-      this->print_drink_Menu();
-      cin >> cust_resp;
-      cout << endl;
-
-      cust_resp = this->validate_user_input(cust_resp);
-      cust_resp = this->validate_numbers(0, num_drink, cust_resp);
-
-      while (cust_resp >= 0 || cust_resp <= num_drink) {
-        if (cust_resp == 0) {
-          break;
-        } else {
-          drink_menu[cust_resp - 1]->update_stock();
-          if (drink_menu[cust_resp - 1]->get_stock() >= 0) {
-            cust1.order_drink(drink_menu[cust_resp - 1]->get_price());
-            cust1.drunk_percentage(
-                drink_menu[cust_resp - 1]->get_nutrition_info());
-            cust1.give_response();
-            emp1.greet(cust1.get_drunkness());
-            break;
-          } else {
-            cout << "Bartender: Unfortunately, we just ran out of "
-                 << drink_menu[cust_resp - 1]->get_name() << endl;
-            drink_menu[cust_resp - 1]->change_stock();
-          }
-          break;
-        }
-      }
-
-    } else if (choice == 0) {
-      cout << "Bye. Hope you enjoy your night here ^^" << endl;
-      break;
-
-    } else if (choice == 2) {  // food
-      int cust_resp;
-      cout << endl;
-
-      this->print_food_Menu();
+      this->print_FnB_Menu();
       cin >> cust_resp;
       cout << endl;
 
@@ -83,24 +93,82 @@ void Casino::module(Customer cust1, Employee emp1) {
         if (cust_resp == 0) {
           break;
         } else {
-          food_menu[cust_resp - 1].update_stock();
-          if (food_menu[cust_resp - 1].get_count() >= 0) {
-            cust1.order_food(food_menu[cust_resp - 1].get_price());
-            cust1.hunger_percentage(
-                food_menu[cust_resp - 1].get_nutrition_info());
+          food_menu[cust_resp - 1]->prepare_food();
+          if (food_menu[cust_resp - 1]->get_stock() >= 0) {
+            cust1.order_drink(food_menu[cust_resp - 1]->get_price());
+            cust1.drunk_percentage(
+                food_menu[cust_resp - 1]->get_nutrition_info());
             cust1.give_response();
-            emp1.greet(cust1.get_drunkness());
+            emp1.give_response(cust1.get_drunkness());
             break;
           } else {
             cout << "Bartender: Unfortunately, we just ran out of "
                  << food_menu[cust_resp - 1]->get_name() << endl;
-            food_menu[cust_resp - 1].change_stock();
+            food_menu[cust_resp - 1]->change_stock();
           }
           break;
         }
       }
 
-    } else if (choice == 3) {  // betting part
+    } else if (choice == 0) {
+      cout << "Bye. Hope you enjoy your night here ^^" << endl;
+      break;
+
+    } else if (choice == 2) {  // gamble
+      int cust_resp;
+      cout << endl;
+
+      this->set_betting_table(emp1);
+      cin >> cust_resp; 
+
+      cust_resp = this->validate_user_input(cust_resp);
+      cust_resp = this->validate_numbers(1000, cust1.money_left(), cust_resp);
+
+      while (cust_resp >= 0 && cust_resp <= cust1.money_left()) {
+        if(cust_resp == 0) {
+          break;
+        }
+        else{
+          while(num_games < 5) {
+            bet_counter[num_games] = new Easy_Game(cust_resp, 3);
+            bet_counter[num_games]->get_card();
+            if(bet_counter[num_games]->won_game()) {
+              cust1.update_wallet(bet_counter[num_games]->get_profit());
+              bet_counter[num_games]->count_profit();
+              cout << "Congrats!! You won " << cust_resp << " Dollars!" << endl;
+            }
+            else {
+              cust1.update_wallet(-(bet_counter[num_games]->get_loss()));
+              bet_counter[num_games]->count_loss();
+              cout << "Unfortunately you lost the bet :( " << endl;
+            }
+            cust1.place_bet(1);
+            num_games++;
+            break;
+          }
+          if(num_games > 5 && num_games <= max_num_games) {
+            bet_counter[num_games] = new Hard_Game(cust_resp, 5);
+            bet_counter[num_games]->get_card();
+            if(bet_counter[num_games]->won_game()) {
+              cust1.update_wallet(bet_counter[num_games]->get_profit());
+              bet_counter[num_games]->count_profit();
+              cout << "Congrats!! You won " << cust_resp << " Dollars!" << endl;
+            }
+            else {
+              cust1.update_wallet(-(bet_counter[num_games]->get_loss()));
+              bet_counter[num_games]->count_loss();
+              cout << "Unfortunately you lost the bet :( " << endl;
+            }
+            cust1.place_bet(1);
+            num_games++;
+            break;
+          }
+          else if (num_games > max_num_games){
+            cout << "You have already played the maximum number of games." << endl;
+            break;
+          }
+        }
+      }
 
     } else {
       cout << "Invalid input, try again: ";
@@ -157,71 +225,21 @@ void Casino::starting_message(int x, Customer c1) {
   }
 }
 
-void Casino::set_food_menu(Employee emp1) {
-  string food_file = "Food_Menu.csv";
-  std::fstream file(food_file);
-
-  if (food_file.is_open()) {
-    string lines;
-    num_food = 0;
-    num_drink = 0;
-    while (std::getline(food_file, lines)) {
-      num_food++;
-      num_drink++;
-    }
-    food_file.clear();
-    food_file.seekg(0);
-
-    food_menu = new FnB_Menu*[num_food];
-    drink_menu = new FnB_Menu*[num_drink];
-
-    for (int i = 0; std::getline(food_file, lines); i++) {
-      if (lines.empty()) {
-        continue;
-      }
-
-      string row;
-      string columns[5];
-      stringstream str(lines);
-
-      for (int j = 0; std::getline(str, row, ','); j++) {
-        columns[j] = row;
-      }
-
-      if (columns[3] == "Drinks") {
-        drink_menu[i] = new Drink(columns[0], std::stoi(columns[1]),
-                                  std::stoi(columns[2]), std::stoi(columns[4]));
-      } else if (columns[3] == "Snacks") {
-        food_menu[i] = new Food(columns[0], std::stoi(columns[1]),
-                                std::stoi(columns[2]), std::stoi(columns[4]));
-      }
-    }
-  } else {
-    cout << "Can't open file." << endl;
-  }
-}
-
-void Casino::print_food_Menu() {
+void Casino::print_FnB_Menu() {
   for (int i = 0; i < num_food; i++) {
-    cout << i + 1 << food_menu[i].get_name() << " | $"
-         << food_menu[i].get_price() << " | " << food_menu[i].get_stock()
-         << " left"
+    cout << i + 1 << food_menu[i]->get_name() << " | $"
+         << food_menu[i]->get_price() << " | " << food_menu[i]->get_stock()
+         << " left";
   }
   cout << "Let us know what you want by typing in the corresponding item "
           "number or 0 to exit: "
        << endl;
 }
 
-void Casino::print_drink_Menu() {
-  for (int i = 0; i < num_drink; i++) {
-    cout << i + 1 << drink_menu[i].get_name() << " | $"
-         << drink_menu[i].get_price() << " | " << drink_menu[i].get_stock()
-         << " left"
-  }
-  cout << "Let us know what you want by typing in the corresponding item "
-          "number or 0 to exit: "
-       << endl;
-}
+//void Casino:: print_betting_table() {
+  //cout << "Welcome to our world of gambling" << endl; 
+  //cout << "Please input how much money you want to bet: " << endl;
+//}
 
 int Casino::validate_user_input(int input) {
   while (cin.fail()) {  //! cin
@@ -246,18 +264,6 @@ int Casino::user_age() {
   return age;
 }
 
-string Casino::user_name() {
-  string name;
-  cout << "What is your name? " << endl;
-  cin >> name;
-
-  while (validate_name() == 0) {
-    cout << "Thats not a real name. Try again: " << endl;
-    cin >> name;
-  }
-  return name;
-}
-
 bool Casino::validate_name(string name) {
   bool valid = false;
 
@@ -271,6 +277,20 @@ bool Casino::validate_name(string name) {
   }
   return valid;
 }
+
+string Casino::user_name() {
+  string name;
+  cout << "What is your name? " << endl;
+  cin >> name;
+
+  while (validate_name(name) == 0) {
+    cout << "Thats not a real name. Try again: " << endl;
+    cin >> name;
+  }
+  return name;
+}
+
+
 
 int Casino::validate_numbers(int x, int y, int z) {
   while (z < x || z > y) {
@@ -293,15 +313,10 @@ void Casino::customer_report(Customer cust1) {
   cout << "Hungriness: " << cust1.get_hungriness() << endl;
 }
 
-Casino::~Casino() {
-  for (int i = 0; i < num_drink; i++) {
-    delete drink_menu[i];
-  }
-
-  for (int j = 0; j < num_food; j++) {
+Casino::~Casino() {  
+for (int j = 0; j < num_food; j++) {
     delete food_menu[j];
   }
 
-  delete[] food_menu;
-  delete[] drink_menu;
+delete[] food_menu;
 }

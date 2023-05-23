@@ -18,11 +18,11 @@ Employee::Employee(string name, int age) : Person(name, age) {
   tipsy_rep[4] = "Employee: Maybe you should stop now";
 }
 
-void Employee::greet() override {
+void Employee::give_response() {
   cout << "Employee: Hellower!! G'day,mate?" << endl;
 }
 
-void Employee::greet(int drunkness) {
+void Employee::give_response(int drunkness) {
   if (drunkness >= 50 and drunkness < 100) {
     cout << tipsy_rep[(rand() % 5)] << endl;
   } else if (drunkness >= 0 and drunkness < 75) {

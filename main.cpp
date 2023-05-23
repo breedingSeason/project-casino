@@ -1,12 +1,17 @@
+#include <ctime>
 #include <iostream>
-#include <string>
 
+#include "Casino.h"
+#include "Customer.h"
+#include "Employee.h"
+#include "FnB_menu.h"
 #include "Games.h"
-#include "Hard_Game.h"
-#include "Easy_Game.h"
-
-using namespace std; 
+#include "Person.h"
 
 int main() {
-    Easy_Game G1(500, 1000, 3);
+  srand(time(NULL));           // To get a random index for responses
+  Casino* start = new Casino;  // Make a new object start
+  start->starting_module();    // Start the program
+
+  delete start;
 }

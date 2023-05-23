@@ -1,6 +1,6 @@
 #include "Hard_Game.h"
 
-HardGame:: HardGame(int bet_amount, int min_bet, int num_players): Games(bet_amount, min_bet, num_players){}
+HardGame:: HardGame(int bet_amount, int num_players): Games(bet_amount, num_players){}
     //for(int i = 0; i < 20; i++) {
       //  Player_cards[i] = cards[i];
     //}

@@ -6,8 +6,8 @@ using namespace std;
 
 Games:: Games() {}
 
-Games:: Games(int bet_amount, int min_bet, int num_players):
-    game_number(0), bet_amount(bet_amount), min_bet(min_bet), player_won(false), 
+Games:: Games(int bet_amount, int num_players):
+    game_number(0), bet_amount(bet_amount), player_won(false), 
     profits(0), loss(0), num_players(num_players) {}
     /*for(int i = 0; i < 18; i++) {
         cards[i] = (rand() % 7) + 8;
@@ -67,6 +67,10 @@ void Games:: get_card() {}
 
 int Games:: get_max_players() {
     return 0;
+}
+
+int Games:: get_min_bet() {
+    return min_bet;
 }
 
 

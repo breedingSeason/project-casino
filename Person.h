@@ -10,10 +10,11 @@ class Person {
   int a_age;
 
  public:
-  Person(); // Default constructor
-  Person(string name, int age); // Constructor with parameter of name and age
-  string get_name(); // Get person's name
-  int get_age(); // Get person's age
+  Person();
+  Person(string name, int age);
+  string get_name();
+  int get_age();
+  virtual void give_response() = 0;
 };
 
 #endif
