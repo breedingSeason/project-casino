@@ -84,4 +84,5 @@ int Games:: get_min_bet() {
     return min_bet;
 }
 
+Games:: ~Games() {}
 

@@ -72,7 +72,7 @@ void Casino::module(Customer cust1, Employee emp1) {
   int choice;
   cout << "You have $" << cust1.money_left() << endl;
   cout << "Your drunk level is " << cust1.get_drunkness() << "." << endl;
-  cout << "Your number of games played is " << cust1.get_games_played() << "." << endl;
+  cout << "Your number of games played is " << num_games << "." << endl;
 
   this->menu_casino();
   cin >> choice;
@@ -160,7 +160,6 @@ void Casino::module(Customer cust1, Employee emp1) {
             }
             cust1.place_bet(1);
             num_games++;
-            
             break;
           }
           else if(num_games >= 5 && num_games <= max_num_games) {

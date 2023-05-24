@@ -43,3 +43,5 @@ bool FnB_menu::change_stock(){//if stocks>0,return true
 int FnB_menu::get_nutrition_info(){
     return 0;
 };
+
+FnB_menu:: ~FnB_menu() {};

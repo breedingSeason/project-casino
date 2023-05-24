@@ -33,6 +33,7 @@ class Games{
         virtual int get_max_players() = 0;
         int get_min_bet();
         int get_bet();
+        virtual ~Games(); // virtual destructor
 };
 
 #endif
