@@ -20,22 +20,22 @@ class Casino {
   int num_food;
   
  public:
-  Casino();
-  void menu_casino();
-  void set_food_menu(Employee emp1);
-  void set_betting_table(Employee emp1);
-  void module(Customer cust1, Employee emp1);
-  void starting_module();
-  void starting_message(int x, Customer c1);
-  void print_FnB_Menu();
-  int validate_user_input(int input);
-  int user_age();
-  string user_name();
-  bool validate_name(string name);
-  int validate_numbers(int x, int y, int z);
-  void customer_report(Customer cust1);
+  Casino(); // default constructor
+  void menu_casino(); // prints default list of options to chose from
+  void set_food_menu(Employee emp1); // sets up the food menu 
+  void set_betting_table(Employee emp1); // sets up the betting table 
+  void module(Customer cust1, Employee emp1); // main function where all the calculation and user interaction takes place;
+  void starting_module(); // the parimary function used to check if the user is eligible to play the game or not
+  void starting_message(int x, Customer c1); // the starting message printed to the user
+  void print_FnB_Menu(); // function to print the food and drinks available
+  int validate_user_input(int input); // function to validate user inputs only numbers
+  int user_age(); // int to prompt and user age
+  string user_name(); // string to promt and store user name
+  bool validate_name(string name); // function to validate user's name
+  int validate_numbers(int x, int y, int z); // function to validate user input is within range of available options
+  void customer_report(Customer cust1); // displays user related information to the
   
-  ~Casino();
+  ~Casino(); // def destructor 
 };
 
 #endif
