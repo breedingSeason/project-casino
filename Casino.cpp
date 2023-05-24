@@ -309,7 +309,7 @@ string Casino::user_name() {
 
 
 
-int Casino::validate_numbers(int x, int y, int z) {
+int Casino::validate_numbers(int x, int y, int z) {//fix break bug
   while (z < x || z > y) {
     cout << "Please input a correct number: ";
     cin >> z;
@@ -319,7 +319,6 @@ int Casino::validate_numbers(int x, int y, int z) {
       cin.ignore(sizeof(unsigned int), '\n');
       cin >> z;
     }
-    break;
   }
   return z;
 }
