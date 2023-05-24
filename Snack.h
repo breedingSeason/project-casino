@@ -13,7 +13,7 @@ class Snacks : public Food {
 
  public:
   Snacks();  // Default constructor
-  Snacks(string name, int stock, int price, string type, int calories, string flavour);         // Parameterized constructor
+  Snacks(string name, int stock, int price, string type, int calories, string flavour); // Parameterized constructor
   string get_flavour() override;  // Returns flavour
 };
 
