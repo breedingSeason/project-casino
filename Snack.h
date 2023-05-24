@@ -12,7 +12,7 @@ class Snacks: public Food {
     public:
     Snacks(); // default constructor
     Snacks(string name,int stock, int price, string type, int calories, string flavour); // 
-    string get_flavour(); // returns the flavour
+    string get_flavour() override; // returns the flavour
 };
 
 #endif

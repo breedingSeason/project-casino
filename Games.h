@@ -8,7 +8,7 @@ class Games{
     protected:
         int game_number;
         int bet_amount;
-        const int min_bet = 1000;
+        const int min_bet = 25000;
         bool player_won;
         int profits;
         int profit;

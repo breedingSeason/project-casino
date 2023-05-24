@@ -15,10 +15,16 @@ void Casino::menu_casino() {
   cout << "0. Leave :(     |   1. Eat :))     |   2. $$Gamble     " << endl;
 }
 
-void Casino::set_betting_table(Employee emp1) {
+void Casino::set_betting_table(Customer cust1) {
   bet_counter = new Games*[max_num_games]; // 
-  cout << "Welcome to our world of gambling" << endl; 
-  cout << "Please input how much money you want to bet: " << endl;
+  cout << "Welcome to our world of gambling" << endl;
+  cout << endl; 
+   if (num_games < max_num_games) {
+    cout << "Please input how much money you want to bet or 0 to exit: " << endl;
+   }
+   else {
+    cout << "You have already played maximum games. But type in your bet anyway: " << endl;
+   }
 }
 
 void Casino::set_food_menu(Employee emp1) {
@@ -44,7 +50,7 @@ if (file.is_open()) {
     }
 
     string row;
-    string columns[5];
+    string columns[6];
     stringstream str(lines);
 
     for (int j = 0; std::getline(str, row, ','); j++) {
@@ -54,9 +60,12 @@ if (file.is_open()) {
     if (columns[3] == "Drinks") {
       food_menu[i] = new Drink(columns[0], std::stoi(columns[1]),
                                 std::stoi(columns[2]), columns[3], std::stoi(columns[4]));
-    } else if (columns[3] == "Snacks") {
+    } else if (columns[3] == "Mains") {
       food_menu[i] = new Food(columns[0], std::stoi(columns[1]),
                               std::stoi(columns[2]), columns[3], std::stoi(columns[4]));
+    } else if (columns[3] == "Snacks") {
+      food_menu[i] = new Snacks(columns[0], std::stoi(columns[1]),
+                              std::stoi(columns[2]), columns[3], std::stoi(columns[4]), columns[5]);
     }
   }
 
@@ -73,6 +82,8 @@ void Casino::module(Customer cust1, Employee emp1) {
   cout << "You have $" << cust1.money_left() << endl;
   cout << "Your drunk level is " << cust1.get_drunkness() << "." << endl;
   cout << "Your number of games played is " << num_games << "." << endl;
+  cout << "Go spend some $$" << endl;
+  cout << endl;
 
   this->menu_casino();
   cin >> choice;
@@ -98,7 +109,7 @@ void Casino::module(Customer cust1, Employee emp1) {
           break;
         } else {
           food_menu[cust_resp - 1]->prepare_food();
-          if (food_menu[cust_resp - 1]->get_stock() >= 0) {
+          if (food_menu[cust_resp - 1]->get_stock() > 0) {
             cust1.order_drink(food_menu[cust_resp - 1]->get_price());
 
             if(food_menu[cust_resp-1]->get_type() == 1) {
@@ -127,28 +138,34 @@ void Casino::module(Customer cust1, Employee emp1) {
       int cust_resp;
       cout << endl;
 
-      this->set_betting_table(emp1);
+     
+      this->set_betting_table(cust1);
+      
       cin >> cust_resp; 
 
       cust_resp = this->validate_user_input(cust_resp);
-      cust_resp = this->validate_numbers(1000, cust1.money_left(), cust_resp);
 
-      while (cust_resp >= 0 && cust_resp <= cust1.money_left()) {
+      while (cust_resp > 0 && cust_resp <= cust1.money_left() && num_games < max_num_games) {
         if(cust_resp == 0) {
           break;
         }
         else{
+          if(cust_resp < 25000 || cust_resp > cust1.money_left()) {
+        cout << "Employee: Hey just a quick reminder: The minimum amount you have to bet is 25000 Dollars ;) " << endl;
+        cout<< "Employee: And obviously you can't bet more than your current wallet lol " << endl;
+        cust_resp = this->validate_numbers(25000, cust1.money_left(), cust_resp);
+      }
+      num_games = cust1.get_games_played();
           if(num_games < 5) {
       bet_counter[num_games] = new Easy_Game(cust_resp, 3);
       bet_counter[num_games]->get_card();
       bet_counter[num_games]->set_game_number();
-      cout << "This is game number: " << bet_counter[num_games]->get_game_number() << endl;
+      cout << cust1.get_games_played() << endl;
       cout << num_games << endl;
             if(bet_counter[num_games]->won_game()) {
               cust1.update_wallet(bet_counter[num_games]->get_profit());
               bet_counter[num_games]->count_profit();
-              cout << "Congrats!! You won " << cust_resp << " Dollars!" << endl;
-              
+              cout << "Congrats!! You won " << cust_resp << " Dollars!" << endl;  
             }
             else {
               cust1.update_wallet(-(bet_counter[num_games]->get_loss()));
@@ -156,35 +173,33 @@ void Casino::module(Customer cust1, Employee emp1) {
               cout << "Unfortunately you lost the bet :( " << endl;
               bet_counter[num_games]->get_card();
               bet_counter[num_games]->set_game_number();
-            
             }
-            cust1.place_bet(1);
-            num_games++;
+            cust1.set_games_played();
             break;
           }
-          else if(num_games >= 5 && num_games <= max_num_games) {
+          if(num_games >= 5 && num_games < max_num_games) {
             bet_counter[num_games] = new Hard_Game(cust_resp, 5);
-            bet_counter[num_games]->get_card();
+      bet_counter[num_games]->get_card();
       bet_counter[num_games]->set_game_number();
-      cout << "This is game number: " << bet_counter[num_games]->get_game_number() << endl;
+      cout << cust1.get_games_played() << endl;
+      cout << num_games << endl;
             if(bet_counter[num_games]->won_game()) {
               cust1.update_wallet(bet_counter[num_games]->get_profit());
               bet_counter[num_games]->count_profit();
-              cout << "Congrats!! You won " << cust_resp << " Dollars!" << endl;
-              break;
+              cout << "Congrats!! You won " << cust_resp << " Dollars!" << endl;  
             }
             else {
               cust1.update_wallet(-(bet_counter[num_games]->get_loss()));
               bet_counter[num_games]->count_loss();
               cout << "Unfortunately you lost the bet :( " << endl;
-              break;
+              bet_counter[num_games]->get_card();
+              bet_counter[num_games]->set_game_number();
             }
-            cust1.place_bet(1);
-            num_games++;
+            cust1.set_games_played();
             break;
           }
-          else if (num_games > max_num_games){
-            cout << "You have already played the maximum number of games." << endl;
+          if(num_games == max_num_games) {
+            cout << "You have already played the maximum number of games: " << endl;
             break;
           }
         }
@@ -248,10 +263,19 @@ void Casino::starting_message(int x, Customer c1) {
 
 void Casino::print_FnB_Menu() {
   for (int i = 0; i < num_food; i++) {
+    if(food_menu[i]->get_type() == -1) {
     cout << i + 1 << "   " << food_menu[i]->get_name() << "   | Price: $"
          << food_menu[i]->get_price() << " |     " << food_menu[i]->get_stock()
+         << " left in stock." << "     |    " << food_menu[i]->get_flavour() << endl;
+    }
+    else {
+      cout << i + 1 << "   " << food_menu[i]->get_name() << "   | Price: $"
+         << food_menu[i]->get_price() << " |     " << food_menu[i]->get_stock()
          << " left in stock." << endl;
+
+    }
   }
+  cout << endl;
   cout << "Let us know what you want by typing in the corresponding item or input 0 to exit: "<< endl;
 }
 
@@ -321,7 +345,6 @@ int Casino::validate_numbers(int x, int y, int z) {
       cin.ignore(sizeof(unsigned int), '\n');
       cin >> z;
     }
-    break;
   }
   return z;
 }
@@ -329,8 +352,18 @@ int Casino::validate_numbers(int x, int y, int z) {
 void Casino::customer_report(Customer cust1) {
   cout << endl;
   cout << "Wallet    : $" << cust1.money_left() << endl;
-  cout << "Drunkness : " << cust1.get_drunkness() << endl;
-  cout << "Hungriness: " << cust1.get_hungriness() << endl;
+  cout << "Games played : " << cust1.get_games_played() << endl;
+  cout << endl;
+  if(cust1.get_drunkness() > 70) {
+    cout << "Bartender: Damn you getting quite drunk. " << endl;
+    cout << "Drunkness : " << cust1.get_drunkness() << endl;
+    cout << endl;
+  }
+  if(cust1.get_hungriness() < 550) { 
+    cout << "Bartender: I think you should stop eating." << endl;
+    cout << "Hungriness: " << cust1.get_hungriness() << endl;
+    cout << endl;
+  }
 }
 
 Casino::~Casino() {  

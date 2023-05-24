@@ -21,7 +21,10 @@ int FnB_menu::get_stock(){
 int FnB_menu:: get_type() {
     int choice = 0;
     if(type_food == "Drinks") {
-        choice = choice + 1;
+        choice = 1;
+    }
+    else if (type_food == "Snacks"){
+        choice = -1;
     }
     else {
         choice = 0;
@@ -37,11 +40,18 @@ int FnB_menu::prepare_food(){//update stock every time a food item is ordered
 };
 
 bool FnB_menu::change_stock(){//if stocks>0,return true
-    return this->stock>0;
+if(stock < 0) {
+    stock = 0;
+}
+    return stock;
 };
 
 int FnB_menu::get_nutrition_info(){
     return 0;
 };
+
+string FnB_menu:: get_flavour() {
+    return 0;
+}
 
 FnB_menu:: ~FnB_menu() {};

@@ -25,8 +25,8 @@ class Customer : public Person {
                                // the cost of the drinks they purchase
   int order_food(int price);   // Deduct the customer's money in accordance with
                                // the cost of the foods they purchase
-  int place_bet(int x);        // Change the value of games_played
   int get_games_played();      // Return games_played
+  void set_games_played();     // Change the value of games_played
   int drunk_percentage(int x);    // Change the value of drunkness
   int get_drunkness();            // Return drunkness
   int hunger_percentage(int x);   // Change the value of hungriness
