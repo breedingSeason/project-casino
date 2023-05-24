@@ -1,8 +1,8 @@
-output: Main.o Person.o Customer.o Employee.o FnB_menu.o Drink.o Food.o Games.o Hard_Game.o Easy_Game.o Casino.o 
-	g++ Main.o Person.o Customer.o Employee.o FnB_menu.o Drink.o Food.o Games.o Hard_Game.o Easy_Game.o Casino.o  -o output
+output: main.o Person.o Customer.o Employee.o FnB_menu.o Drink.o Food.o Snack.o Games.o Hard_Game.o Easy_Game.o Casino.o 
+	g++ main.o Person.o Customer.o Employee.o FnB_menu.o Drink.o Food.o Snack.o Games.o Hard_Game.o Easy_Game.o Casino.o -o output
 
-Main.o: Main.cpp
-	g++ -c Main.cpp
+main.o: main.cpp
+	g++ -c main.cpp
 
 Person.o: Person.cpp Person.h
 	g++ -c Person.cpp 
@@ -21,6 +21,9 @@ Drink.o: Drink.cpp Drink.h
 
 Food.o: Food.cpp Food.h
 	g++ -c Food.cpp	
+
+Snack.o: Snack.cpp Snack.h
+	g++ -c Snack.cpp	
 	
 Games.o: Games.cpp Games.h  
 	g++ -c Games.cpp
