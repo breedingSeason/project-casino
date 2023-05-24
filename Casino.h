@@ -9,6 +9,7 @@
 #include "Employee.h"
 #include "Food.h"
 #include "Hard_Game.h"
+#include "Snack.h"
 
 using namespace std;
 
@@ -16,14 +17,14 @@ class Casino {
   FnB_menu** food_menu;
   Games** bet_counter;
   int num_games = 0;
-  const int max_num_games = 15;
-  int num_food;
+  const int max_num_games = 6;
+  int num_food = 0;
   
  public:
   Casino(); // default constructor
   void menu_casino(); // prints default list of options to chose from
   void set_food_menu(Employee emp1); // sets up the food menu 
-  void set_betting_table(Employee emp1); // sets up the betting table 
+  void set_betting_table(Customer cust1); // sets up the betting table 
   void module(Customer cust1, Employee emp1); // main function where all the calculation and user interaction takes place;
   void starting_module(); // the parimary function used to check if the user is eligible to play the game or not
   void starting_message(int x, Customer c1); // the starting message printed to the user

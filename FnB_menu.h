@@ -19,7 +19,9 @@ class FnB_menu{
     int prepare_food();//update stock every time a food item is ordered, decrease the stock by input x
     bool change_stock(); //ensures the ordered food is in stock and the stock is not negative, return true if stock>=0
     virtual int get_nutrition_info();//will return different values based on derived class
+    virtual string get_flavour(); // virtual function to return flavour 
     virtual ~FnB_menu(); // virtual destructor 
+    
 
 };
 #endif
