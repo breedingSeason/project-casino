@@ -64,7 +64,7 @@ int Games:: get_game_number() {
 }
 
 void Games:: set_game_number() {
-    game_number+= 1;
+    game_number = game_number + 1;
     
 }
 

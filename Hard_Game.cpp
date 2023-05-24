@@ -16,9 +16,11 @@ void Hard_Game:: get_card() {
         for(int i = 0; i < 5; i++) {
             cards[i] = (rand() % 13) + 3;
             sum+= cards[i]; 
+            cout << cards[i] << endl;
         }
         Player_cards_Sum = sum;
     } 
+    
 }
 
 void Hard_Game:: set_num_players(int x) {

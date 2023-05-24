@@ -16,8 +16,10 @@ void Easy_Game:: get_card() {
     for(int i = 0; i < 3; i++) {
         cards[i] = (rand() % 7) + 8;
         sum+= cards[i]; 
+        cout << cards[i] << endl;
     }
     Player_cards_Sum = sum;
+    cout << "sum: " << sum << endl;
 }
 
 void Easy_Game:: set_num_players(int x) {
@@ -31,8 +33,10 @@ void Easy_Game:: set_num_players(int x) {
 
 bool Easy_Game:: won_game() {
     bool won = true;
-    int x = (rand() %6) + 10;
-    int y = (rand() %7) + 9;
+    int x = (rand() %6) + 15;
+    int y = (rand() %11) + 20;
+    cout << x << endl;
+    cout << y << endl;
 
     if(Player_cards_Sum <= x && Player_cards_Sum <= y) {
         won = false;
