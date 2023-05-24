@@ -12,7 +12,7 @@ class Customer : public Person {
   int drunkness = 0;
   int wallet = 150000;
   const int min_money = 0;
-  int hungriness = 5000;
+  int hungriness = 2000;
   int games_played = 0;
   string conscious_rep[5];
   string tipsy_rep[5];
