@@ -1,16 +1,12 @@
-﻿Water,10000,5,Drinks,0,N/A
-Vodka-Tonic,20,12,Drinks,10,N/A
-Whiskey & Coke,15,15,Drinks,15,N/A
-Rum & Coke,18,15,Drinks,15,N/A
-Tap Beer,9,9,Drinks,6,N/A
-Root Beer,14,6,Drinks,0,N/A
-Monster,17,5.5,Drinks,0,N/A
-Ginger Ale ,16,4,Drinks,0,N/A
-Buffalo Wings,16,16.99,Mains,300,N/A
-Fries ,23,9.99,Mains,450,N/A
-Cheeseburger,21,18.99,Mains,690,N/A
-Fish & Chips,27,18.99,Mains,500,N/A
-Tortilla Chips,20,7.89,Mains,350,N/A
-Ice Cream,100,12,Snacks,150,Vanilla
-Popcorn,50,15.67,Snacks,300,Chocolate
-Macaron,20,8,Snacks,100,Butterscotch
+﻿Water,10000,0,Drinks,0
+Vodka-Tonic,20,12,Drinks,10
+Whiskey & Coke,15,15,Drinks,15
+Rum & Coke,18,15,Drinks,15
+Tap Beer,9,9,Drinks,6
+Root Beer,14,6,Drinks,0
+Monster,17,5.5,Drinks,0
+Ginger Ale ,16,4,Drinks,0
+Buffalo Wings,16,16.99,Snacks,300
+Fries ,23,9.99,Snacks,450
+Cheeseburger,21,18.99,Snacks,690
+Fish & Chips,27,18.99,Snacks,500
