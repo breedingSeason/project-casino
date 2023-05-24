@@ -29,11 +29,17 @@ void Games:: set_bet(int x) {
     }
 }
 
+int Games:: get_bet() {
+    return bet_amount;
+}
+
 int Games:: get_profit() {
+    profit = get_bet();
     return profit;
 }
 
 int Games:: get_loss() {
+    loss = get_bet();
     return loss;
 }
 
@@ -55,6 +61,11 @@ int Games:: get_num_players() {
 
 int Games:: get_game_number() {
     return game_number;
+}
+
+void Games:: set_game_number() {
+    game_number+= 1;
+    
 }
 
 void Games:: set_num_players(int x) {}

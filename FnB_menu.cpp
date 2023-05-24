@@ -23,7 +23,7 @@ int FnB_menu:: get_type() {
     if(type_food == "Drinks") {
         choice = choice + 1;
     }
-    else if(type_food == "Snacks") {
+    else {
         choice = 0;
     }
     return choice;

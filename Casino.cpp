@@ -100,8 +100,13 @@ void Casino::module(Customer cust1, Employee emp1) {
           food_menu[cust_resp - 1]->prepare_food();
           if (food_menu[cust_resp - 1]->get_stock() >= 0) {
             cust1.order_drink(food_menu[cust_resp - 1]->get_price());
-            cust1.drunk_percentage(
-                food_menu[cust_resp - 1]->get_nutrition_info());
+
+            if(food_menu[cust_resp-1]->get_type() == 1) {
+              cust1.drunk_percentage(food_menu[cust_resp - 1]->get_nutrition_info());
+            }
+            else {
+              cust1.hunger_percentage(food_menu[cust_resp - 1]->get_nutrition_info());
+            }
             cust1.give_response();
             emp1.give_response(cust1.get_drunkness());
             break;
@@ -133,35 +138,40 @@ void Casino::module(Customer cust1, Employee emp1) {
           break;
         }
         else{
-          while(num_games < 5) {
+          if(num_games < 5) {
             bet_counter[num_games] = new Easy_Game(cust_resp, 3);
             bet_counter[num_games]->get_card();
+            bet_counter[num_games]->set_game_number();
             if(bet_counter[num_games]->won_game()) {
               cust1.update_wallet(bet_counter[num_games]->get_profit());
               bet_counter[num_games]->count_profit();
               cout << "Congrats!! You won " << cust_resp << " Dollars!" << endl;
+              
             }
             else {
               cust1.update_wallet(-(bet_counter[num_games]->get_loss()));
               bet_counter[num_games]->count_loss();
               cout << "Unfortunately you lost the bet :( " << endl;
+              
             }
             cust1.place_bet(1);
-            num_games++;
+            num_games = bet_counter[num_games]->get_game_number();
             break;
           }
-          if(num_games > 5 && num_games <= max_num_games) {
+          else if(num_games > 5 && num_games <= max_num_games) {
             bet_counter[num_games] = new Hard_Game(cust_resp, 5);
             bet_counter[num_games]->get_card();
             if(bet_counter[num_games]->won_game()) {
               cust1.update_wallet(bet_counter[num_games]->get_profit());
               bet_counter[num_games]->count_profit();
               cout << "Congrats!! You won " << cust_resp << " Dollars!" << endl;
+              break;
             }
             else {
               cust1.update_wallet(-(bet_counter[num_games]->get_loss()));
               bet_counter[num_games]->count_loss();
               cout << "Unfortunately you lost the bet :( " << endl;
+              break;
             }
             cust1.place_bet(1);
             num_games++;
@@ -172,6 +182,7 @@ void Casino::module(Customer cust1, Employee emp1) {
             break;
           }
         }
+
       }
 
     } else {
@@ -215,7 +226,7 @@ void Casino::starting_module() {
     this->module(c1, e1);
 
   } else if (age >= 0 || age < 18) {
-    cout << "You need to be at least 18!!" << endl;
+    cout << "You need to be at least 18! Get out!" << endl;
   }
 }
 
@@ -225,19 +236,17 @@ void Casino::starting_message(int x, Customer c1) {
          << endl;
     cout << endl;
   } else if (x == 2) {
-    cout << "You need to be at least 18!!" << std::endl;
+    cout << "You need to be at least 18! " << std::endl;
   }
 }
 
 void Casino::print_FnB_Menu() {
   for (int i = 0; i < num_food; i++) {
-    cout << i + 1 << food_menu[i]->get_name() << " | $"
-         << food_menu[i]->get_price() << " | " << food_menu[i]->get_stock()
-         << " left";
+    cout << i + 1 << "   " << food_menu[i]->get_name() << "   | Price: $"
+         << food_menu[i]->get_price() << " |     " << food_menu[i]->get_stock()
+         << " left in stock." << endl;
   }
-  cout << "Let us know what you want by typing in the corresponding item "
-          "number or 0 to exit: "
-       << endl;
+  cout << "Let us know what you want by typing in the corresponding item or input 0 to exit: "<< endl;
 }
 
 //void Casino:: print_betting_table() {
@@ -306,6 +315,7 @@ int Casino::validate_numbers(int x, int y, int z) {
       cin.ignore(sizeof(unsigned int), '\n');
       cin >> z;
     }
+    break;
   }
   return z;
 }
@@ -321,6 +331,10 @@ Casino::~Casino() {
 for (int j = 0; j < num_food; j++) {
     delete food_menu[j];
   }
+for(int i = 0; i < num_games; i++) {
+  delete bet_counter[i];
+}
 
+delete[] bet_counter;
 delete[] food_menu;
 }

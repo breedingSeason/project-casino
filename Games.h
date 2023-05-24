@@ -26,11 +26,13 @@ class Games{
         void count_loss();
         int get_num_players();
         int get_game_number();
+        void set_game_number();
         virtual void set_num_players(int x);
         virtual bool won_game() = 0;
         virtual void get_card() = 0;
         virtual int get_max_players() = 0;
         int get_min_bet();
+        int get_bet();
 };
 
 #endif
