@@ -2,6 +2,7 @@
 #define GAMES_H
 
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class Games{
@@ -15,6 +16,7 @@ class Games{
         int losses;
         int loss;
         int num_players;
+        vector<int> user_scores;
         //int cards[52];
     public:
         Games();
@@ -33,7 +35,9 @@ class Games{
         virtual int get_max_players() = 0;
         int get_min_bet();
         int get_bet();
+        void print_scores(); // prints the user scores 
         virtual ~Games(); // virtual destructor
+        
 };
 
 #endif

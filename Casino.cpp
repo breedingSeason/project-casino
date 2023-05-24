@@ -19,8 +19,10 @@ void Casino::set_betting_table(Customer cust1) {
   bet_counter = new Games*[max_num_games]; // 
   cout << "Welcome to our world of gambling" << endl;
   cout << endl; 
-   if (num_games < max_num_games) {
+   if (num_games < max_num_games && num_games < 5) {
+    cout << "You will compete with two other players. The player with the highest valued card will win. " << endl;
     cout << "Please input how much money you want to bet or 0 to exit: " << endl;
+    cout << endl;
    }
    else {
     cout << "You have already played maximum games. But type in your bet anyway: " << endl;
@@ -160,8 +162,8 @@ void Casino::module(Customer cust1, Employee emp1) {
       bet_counter[num_games] = new Easy_Game(cust_resp, 3);
       bet_counter[num_games]->get_card();
       bet_counter[num_games]->set_game_number();
-      cout << cust1.get_games_played() << endl;
-      cout << num_games << endl;
+      //cout << cust1.get_games_played() << endl;
+      //cout << num_games << endl;
             if(bet_counter[num_games]->won_game()) {
               cust1.update_wallet(bet_counter[num_games]->get_profit());
               bet_counter[num_games]->count_profit();
@@ -199,7 +201,27 @@ void Casino::module(Customer cust1, Employee emp1) {
             break;
           }
           if(num_games == max_num_games) {
-            cout << "You have already played the maximum number of games: " << endl;
+            cout << "You have already played the maximum number of games. You gotta bet it all or go home. " << endl;
+            
+
+            bet_counter[num_games] = new Hard_Game(cust_resp, 5);
+      bet_counter[num_games]->get_card();
+      bet_counter[num_games]->set_game_number();
+      cout << cust1.get_games_played() << endl;
+      cout << num_games << endl;
+            if(bet_counter[num_games]->won_game()) {
+              cust1.update_wallet(bet_counter[num_games]->get_profit());
+              bet_counter[num_games]->count_profit();
+              cout << "Congrats!! You won " << cust_resp << " Dollars!" << endl;  
+            }
+            else {
+              cust1.update_wallet(-(bet_counter[num_games]->get_loss()));
+              bet_counter[num_games]->count_loss();
+              cout << "Unfortunately you lost the bet :( " << endl;
+              bet_counter[num_games]->get_card();
+              bet_counter[num_games]->set_game_number();
+            }
+            cust1.set_games_played();
             break;
           }
         }
@@ -370,10 +392,10 @@ Casino::~Casino() {
 for (int j = 0; j < num_food; j++) {
     delete food_menu[j];
   }
-for(int i = 0; i < num_games; i++) {
-  delete bet_counter[i];
-}
+//for(int i = 0; i < max_num_games; i++) {
+  //delete bet_counter[i];
+//}
 
-delete[] bet_counter;
+//delete[] bet_counter;
 delete[] food_menu;
 }

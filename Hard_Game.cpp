@@ -14,11 +14,13 @@ void Hard_Game:: get_card() {
     int sum = 0;
     if(game_number > min_games_played) {
         for(int i = 0; i < 5; i++) {
-            cards[i] = (rand() % 13) + 3;
+            cards[i] = (rand() % 11) + 40;
             sum+= cards[i]; 
-            cout << cards[i] << endl;
+            cout << "Your cards number " << i+1 <<": " << cards[i] << endl;
         }
         Player_cards_Sum = sum;
+        user_scores.push_back(sum);
+        cout << "The sum of your cards is: " << sum << endl;
     } 
     
 }
@@ -37,7 +39,8 @@ bool Hard_Game:: won_game() {
     int x[5];
 
     for(int i = 0; i < 4; i++) {
-        x[i] = (rand() % 20) + 45;
+        x[i] = (rand() % 10) + 55;
+        cout << "Opponent " << i << "'s sum of cards: " << x[i] << endl;
         if(Player_cards_Sum <= x[i]) {
             won = false;
         }

@@ -84,5 +84,13 @@ int Games:: get_min_bet() {
     return min_bet;
 }
 
+void Games::print_scores() {
+        cout << "User Scores: ";
+    for (int score : user_scores) {
+        cout << score << " ";
+    }
+        cout << endl;
+};
+
 Games:: ~Games() {}
 
