@@ -165,6 +165,8 @@ void Casino::module(Customer cust1, Employee emp1) {
           else if(num_games >= 5 && num_games <= max_num_games) {
             bet_counter[num_games] = new Hard_Game(cust_resp, 5);
             bet_counter[num_games]->get_card();
+      bet_counter[num_games]->set_game_number();
+      cout << "This is game number: " << bet_counter[num_games]->get_game_number() << endl;
             if(bet_counter[num_games]->won_game()) {
               cust1.update_wallet(bet_counter[num_games]->get_profit());
               bet_counter[num_games]->count_profit();
