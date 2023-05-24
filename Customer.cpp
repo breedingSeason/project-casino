@@ -42,17 +42,12 @@ int Customer::order_food(int price) {
   }
 }
 
-int Customer::place_bet(int x) {
+void Customer::set_games_played() {
   // Increase games played
-  games_played = games_played + x;
-  if (games_played > 0) {
-    return games_played;
-  } else if (games_played < 0) {
+  games_played = games_played + 1;
+  if (games_played < 0) {
     games_played = 0;
     cout << "Play more! You will win next time for sure!" << endl;
-    return games_played;
-  } else {
-    return games_played;
   }
 }
 
