@@ -255,9 +255,12 @@ void Casino::starting_message(int x, Customer c1) {
 }
 
 void Casino::print_FnB_Menu() {
+  int a;//1
   for (int i = 0; i < num_food; i++) {
+  if(food_menu[i]->get_stock()>=0)a=food_menu[i]->get_stock();//2
+  else a=0;//3
     cout << i + 1 << "   " << food_menu[i]->get_name() << "   | Price: $"
-         << food_menu[i]->get_price() << " |     " << food_menu[i]->get_stock()
+         << food_menu[i]->get_price() << " |     " << a//4
          << " left in stock." << endl;
   }
   cout << "Let us know what you want by typing in the corresponding item or input 0 to exit: "<< endl;
