@@ -51,7 +51,7 @@ class UnitTest{
     void testGames(){
         //test atrributes in Games, but Games has virtual functions so use its inherit class here
         Easy_Game AGame(2000,5);
-        if(AGame.get_min_bet()!=1000){
+        if(AGame.get_min_bet()!=25000){
             cout<<"Init min bet false!"<<endl;
         }
         if(AGame.get_game_number()!=0){
